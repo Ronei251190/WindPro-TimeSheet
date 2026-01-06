@@ -897,6 +897,20 @@ export default function App() {
       <div style={{ opacity: 0.7, marginBottom: 12 }}>
         PDF doar pe perioada selectată (luna). Submit = email + lock. Unlock = admin.
       </div>
+          <button
+      onClick={testEmail}
+      style={{
+        marginBottom: 16,
+        padding: "8px 14px",
+        borderRadius: 8,
+        border: "1px solid #ccc",
+        background: "#f6f6f6",
+        cursor: "pointer",
+      }}
+    >
+      TEST EMAIL
+    </button>
+
 
       {/* TOP BAR */}
       <div
@@ -1484,4 +1498,18 @@ export default function App() {
       </div>
     </div>
   );
+}
+async function testEmail() {
+  const r = await fetch("/api/send-timesheet", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      to: "borot@windpro.pl",
+      subject: "Test Timesheet",
+      text: "Salut! Test email.",
+    }),
+  });
+
+  const data = await r.json().catch(() => ({}));
+  alert(`Status: ${r.status}\n${JSON.stringify(data, null, 2)}`);
 }
